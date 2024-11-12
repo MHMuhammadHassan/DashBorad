@@ -4,6 +4,7 @@ import InsightCard from './insightCard';
 import { insightsData } from './InsightData';
 import Navbar from './navbar';
 import User from './User';
+import Table from './table/Table';
 const Dashboard = () => {
     const user = {
         name: 'Muhammad Hassan', 
@@ -21,6 +22,9 @@ const Dashboard = () => {
         <InsightCard key={index} {...data} />
       ))}
     </div>
+    </div>
+    <div className='flex justify-center flex-col items-center'>
+    <Table/>
     </div>
     </>
   );

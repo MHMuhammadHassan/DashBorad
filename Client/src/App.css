@@ -1,10 +1,14 @@
 #root {
+  display: flex;
+  justify-content: flex-start; /* Ensure items are aligned to the start of the flex container */
+  flex-direction: column;
+
   max-width: 100vw;
-  background-color: white;
-  margin: 0 auto;
+  background-color: white; 
   padding: 2rem;
-  text-align: center;
+  text-align: left; /* Align text to the start (left) instead of center */
 }
+
 
 .flip-card {
   transform: rotateY(180deg) scale(1.5);

@@ -33,7 +33,7 @@ const addAppointment = (req, res) => {
     const { name, type, previousAppointment, status, nextAppointment } = req.body;
     console.log('connect');
     
-    // Validate input
+
     if (!name || !type || !previousAppointment || !status || !nextAppointment) {
         return res.status(400).json({ error: 'All fields are required' });
     }
@@ -52,4 +52,32 @@ const addAppointment = (req, res) => {
 };
 
 
-module.exports = { getAppointments, addAppointment };
+const updateAppointment = (req, res) => {
+    const { appointmentId } = req.params; // Get the appointment ID from the route parameters
+    const { name, type, previousAppointment, status, nextAppointment } = req.body; // Get updated fields from the request body
+
+    // Check if all fields are provided
+    if (!appointmentId || !name || !type || !previousAppointment || !status || !nextAppointment) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    const query = `UPDATE appointment 
+                   SET name = ?, type = ?, previousAppointment = ?, status = ?, nextAppointment = ? 
+                   WHERE id = ?`;
+    const values = [name, type, previousAppointment, status, nextAppointment, appointmentId];
+
+    db.query(query, values, (err, result) => {
+        if (err) {
+            console.error('Update appointment error:', err);
+            return res.status(500).json({ error: 'Failed to update appointment' });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Appointment not found' });
+        }
+
+        res.status(200).json({ message: 'Appointment updated successfully' });
+    });
+};
+
+module.exports = { getAppointments, addAppointment, updateAppointment };

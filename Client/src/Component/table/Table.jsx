@@ -15,7 +15,7 @@ const Table = () => {
       try {
         const res = await axios.get('http://localhost:5000/dashborad/getappointment');
         setdata(res.data);
-        console.log('hassan', data.data[0]);
+
         
       } catch (err) {
         setError(err.message || 'Something went wrong');
@@ -24,7 +24,7 @@ const Table = () => {
     };
 
     getdata();
-  }, data)
+  }, [])
   const filterdata = data.filter((patient) => patient.name.includes(search) &&  patient.status.includes(status));
     return (
         <div className="flex flex-col mt-4 justify-center bg-slate-100 shadow-lg rounded-lg w-[96vw] mx-auto">

@@ -7,13 +7,13 @@ const AppointmentTable = ({ data }) => {
   const [selectedAppointment, setSelectedAppointment] = useState(null); // Track selected appointment
 
   const handleEdit = (appointment) => {
-    setSelectedAppointment(appointment); // Set the selected appointment
-    setEdit(true); // Open the edit form
+    setSelectedAppointment(appointment); 
+    setEdit(true); 
   };
 
   const handleClose = () => {
     setEdit(false);
-    setSelectedAppointment(null); // Clear selected appointment
+    setSelectedAppointment(null); 
   };
 
   const handleFormSubmit = (updatedData) => {
@@ -29,6 +29,18 @@ const AppointmentTable = ({ data }) => {
     putData();
     setEdit(false);
   };
+
+  const handleDelete = (id)=>{
+    console.log('id' , id);
+
+    try {
+      axios.delete(`http://localhost:5000/dashborad/deleteappointment/${id}`);
+    } catch (error) {
+      console.log('Delete data error', error);
+    }
+    
+
+  }
 
   return (
     <div className="overflow-x-auto max-w-full">
@@ -61,12 +73,12 @@ const AppointmentTable = ({ data }) => {
               <td className="px-4 py-2 border">{item.nextAppointment || 'N/A'}</td>
               <td className="px-4 py-2 border text-center">
                 <button
-                  onClick={() => handleEdit(item)} // Pass selected appointment on edit click
+                  onClick={() => handleEdit(item)}
                   className="text-blue-500 mr-2"
                 >
                   Edit
                 </button>
-                <button className="text-red-500">Delete</button>
+                <button className="text-red-500" onClick={()=>handleDelete(item.id)} >Delete</button>
               </td>
             </tr>
           ))}

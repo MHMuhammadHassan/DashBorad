@@ -53,10 +53,9 @@ const addAppointment = (req, res) => {
 
 
 const updateAppointment = (req, res) => {
-    const { appointmentId } = req.params; // Get the appointment ID from the route parameters
-    const { name, type, previousAppointment, status, nextAppointment } = req.body; // Get updated fields from the request body
+    const { appointmentId } = req.params;
+    const { name, type, previousAppointment, status, nextAppointment } = req.body; 
 
-    // Check if all fields are provided
     if (!appointmentId || !name || !type || !previousAppointment || !status || !nextAppointment) {
         return res.status(400).json({ error: 'All fields are required' });
     }
@@ -80,4 +79,19 @@ const updateAppointment = (req, res) => {
     });
 };
 
-module.exports = { getAppointments, addAppointment, updateAppointment };
+const DeleteAppointment = (req, res) => {
+    const  {id} = req.params; 
+    const query = 'DELETE FROM appointment WHERE id = ?'; 
+    console.log('check :',id);
+    
+    db.query(query, [id], (err, result) => {
+        if (err) {
+            console.error('Error deleting appointment:', err);
+            return res.status(500).json({ error: 'Failed to delete appointment' });
+        }
+        console.log('Deleted successfully!');
+        return res.status(200).json({ message: 'Appointment deleted successfully', result });
+    });
+};
+
+module.exports = { getAppointments, addAppointment, updateAppointment,DeleteAppointment };
